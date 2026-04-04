@@ -1,0 +1,135 @@
+library(ggplot2)
+  library(dplyr)
+  
+  # -------------------------------
+  # 1. IDEAL LINE SETUP
+  # -------------------------------
+  
+  slope <- -55 / 40
+  intercept <- 60
+  
+  ideal_moves <- 0:80
+  ideal_time_raw <- intercept + slope * ideal_moves
+  ideal_time <- ifelse(ideal_time_raw > 0, ideal_time_raw, 0)
+  
+  ideal_df <- data.frame(
+    move = ideal_moves,
+    time = ideal_time,
+    type = "Ideal"
+  )
+  
+  # -------------------------------
+  # 2. FUNCTION TO ADD A GAME
+  # -------------------------------
+  
+  add_game <- function(times, name) {
+    data.frame(
+      move = 0:(length(times)-1),
+      time = times,
+      type = name
+    )
+  }
+  
+  # -------------------------------
+  # 3. ADD YOUR GAMES HERE
+  # -------------------------------
+  
+  # Game 1 (example)
+  game1_times <- c(
+    60, 60, 60, 59, 57, 57, 57, 56, 54, 52,
+    51, 48, 46, 40, 26, 25, 19, 17, 13, 13,
+    8, 7, 4, 4, 4, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0
+  )
+  
+  game1_df <- add_game(game1_times, "Game 1")
+  
+  # Game 2 (example)
+  game2_times <- c(
+    60, 60, 60, 60, 60, 60, 59, 57, 55, 54,
+    52, 47, 41, 34, 32, 30, 28, 25, 15, 12,
+    3, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 1, 1, 0, 
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+  )
+  
+  game2_df <- add_game(game2_times, "Game 2")
+  
+  game3_times <- c(
+    60, 60, 60, 58, 57, 57, 57, 56, 55, 55,
+    54, 50, 50, 48, 47, 44, 40, 32, 28, 25,
+    24, 23, 22, 21, 18, 16, 14, 13, 11, 11, 9, 7, 6, 5, 
+    5, 4, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1
+  )
+  
+  game3_df <- add_game(game3_times, "Game 3")
+  
+  game4_times <- c(
+    59, 59, 59, 59, 59, 59, 58, 58, 56, 51,
+    50, 49, 49, 48, 46, 45, 43, 38, 37, 30,
+    30, 29, 23, 22, 21, 19, 12, 11, 11, 8, 7,
+    5, 5, 4, 4, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 
+  )
+  
+  game4_df <- add_game(game4_times, "Game 4")
+  
+  # -------------------------------
+  # 4. COMBINE ALL DATA
+  # -------------------------------
+  
+  plot_df <- bind_rows(
+    ideal_df,
+    game1_df,
+    game2_df,
+    game3_df,
+    game4_df
+  )
+  
+  # -------------------------------
+  # 5. FILTER WHICH LINES TO SHOW
+  # -------------------------------
+  
+  plot_df_filtered <- plot_df %>%
+    filter(type %in% c("Ideal", "Game 1", "Game 2", "Game 3", "Game 4"))
+  
+  # To hide a game, just remove it:
+  # filter(type %in% c("Ideal", "Game 1"))
+  
+  # -------------------------------
+  # 6. CUSTOM COLORS
+  # -------------------------------
+  
+  custom_colors <- c(
+    "Ideal" = "black",
+    "Game 1" = "red",
+    "Game 2" = "green",
+    "Game 3" = "green",
+    "Game 4" = "blue"
+  )
+  
+  # -------------------------------
+  # 7. PLOT
+  # -------------------------------
+  
+  ggplot(plot_df_filtered, aes(x = move, y = time, color = type)) +
+    
+    geom_line(size = 1.2) +
+    
+    scale_color_manual(values = custom_colors) +
+    
+    scale_x_continuous(
+      breaks = seq(0, max(plot_df$move), by = 5)
+    ) +
+    
+    scale_y_continuous(
+      breaks = seq(0, 60, by = 10),
+      limits = c(0, 60)
+    ) +
+    
+    labs(
+      title = "Chess Zone 2026 March Action Game 1 Time Management Breakdown",
+      x = "Move Number",
+      y = "Minutes Left",
+      color = "Game"
+    ) +
+    
+    theme_minimal(base_size = 14)
