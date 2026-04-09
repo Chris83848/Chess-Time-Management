@@ -101,8 +101,8 @@ library(ggplot2)
   custom_colors <- c(
     "Ideal" = "black",
     "Game 1" = "red",
-    "Game 2" = "green",
-    "Game 3" = "green",
+    "Game 2" = "green1",
+    "Game 3" = "green3",
     "Game 4" = "blue"
   )
   
@@ -126,7 +126,7 @@ library(ggplot2)
     ) +
     
     labs(
-      title = "Chess Zone 2026 March Action Game 1 Time Management Breakdown",
+      title = "Chess Zone 2026 March Action Tournament Time Management Breakdown",
       x = "Move Number",
       y = "Minutes Left",
       color = "Game"
