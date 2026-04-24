@@ -93,7 +93,7 @@ plot_df <- bind_rows(
 # -------------------------------
 
 plot_df_filtered <- plot_df %>%
-  filter(type %in% c("Ideal", "Game 3"))
+  filter(type %in% c("Ideal", "Game 1", "Game 2", "Game 3", "Game 4", "Game 5"))
 
 # To hide a game, just remove it:
 # filter(type %in% c("Ideal", "Game 1"))
@@ -104,11 +104,11 @@ plot_df_filtered <- plot_df %>%
 
 custom_colors <- c(
   "Ideal" = "black",
-  "Game 1" = "blue",
+  "Game 1" = "darkblue",
   "Game 2" = "red",
   "Game 3" = "blue",
-  "Game 4" = "blue",
-  "Game 5" = "blue"
+  "Game 4" = "lightblue",
+  "Game 5" = "skyblue"
 )
 
 # -------------------------------
@@ -133,7 +133,7 @@ ggplot() +
   
   scale_x_continuous(
     breaks = seq(0, max(plot_df$move), by = 5),
-    limits = c(0, 60)
+    limits = c(0, 90)
   ) +
   
   scale_y_continuous(
@@ -142,7 +142,7 @@ ggplot() +
   ) +
   
   labs(
-    title = "2026 Phillip O'Neal Taylor GA State Championship Game 3 Time Management Breakdown",
+    title = "2026 Phillip O'Neal Taylor GA State Championship Tournament Time Management Breakdown",
     x = "Move Number",
     y = "Minutes Left",
     color = "Game"
