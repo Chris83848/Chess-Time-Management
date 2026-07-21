@@ -11,6 +11,7 @@ intercept <- 90
 ideal_moves <- 0:60
 ideal_time_raw <- intercept + slope * ideal_moves
 ideal_time <- ifelse(ideal_time_raw > 0, ideal_time_raw, 0)
+ideal_df <- data.frame(move = ideal_moves, time = ideal_time)
 
 # -------------------------------
 # 2. FUNCTION TO ADD A GAME
